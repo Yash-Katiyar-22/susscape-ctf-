@@ -1,58 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Susscape CTF - Among Us Themed Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Among Us Dark Space Theme */
+    --background: 216 20% 8%;          /* Deep space dark */
+    --foreground: 200 20% 90%;         /* Light gray text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 216 25% 12%;               /* Darker panel */
+    --card-foreground: 200 20% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 216 25% 10%;
+    --popover-foreground: 200 20% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Among Us Electric Blue */
+    --primary: 194 100% 50%;           /* Electric cyan */
+    --primary-foreground: 216 20% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Sus Red (Among Us classic) */
+    --secondary: 0 85% 40%;            /* Among Us red */
+    --secondary-foreground: 200 20% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 216 20% 15%;
+    --muted-foreground: 200 10% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Neon Green Accent */
+    --accent: 120 100% 55%;            /* Bright neon green */
+    --accent-foreground: 216 20% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 85% 50%;
+    --destructive-foreground: 200 20% 90%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 216 20% 20%;
+    --input: 216 25% 15%;
+    --ring: 194 100% 50%;
 
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --radius: 0.75rem;
+    
+    /* Custom Among Us Design Tokens */
+    --sus-warning: 39 100% 50%;        /* Orange warning */
+    --sus-success: 120 100% 40%;       /* Task complete green */
+    --sus-emergency: 0 100% 60%;       /* Emergency red */
+    
+    /* Gradients */
+    --gradient-space: linear-gradient(135deg, hsl(216 25% 8%) 0%, hsl(216 30% 12%) 50%, hsl(194 30% 15%) 100%);
+    --gradient-neon: linear-gradient(90deg, hsl(194 100% 50%) 0%, hsl(120 100% 55%) 100%);
+    --gradient-emergency: linear-gradient(45deg, hsl(0 85% 40%) 0%, hsl(0 100% 60%) 100%);
+    
+    /* Shadows & Glows */
+    --glow-primary: 0 0 20px hsl(194 100% 50% / 0.4);
+    --glow-accent: 0 0 20px hsl(120 100% 55% / 0.4);
+    --glow-danger: 0 0 20px hsl(0 85% 50% / 0.4);
+    --shadow-card: 0 8px 32px hsl(216 20% 8% / 0.8);
+    
+    /* Typography */
+    --font-mono: 'Fira Code', 'Courier New', monospace;
+    --font-sans: 'Inter', system-ui, sans-serif;
   }
 
   .dark {
@@ -100,6 +108,131 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    background: var(--gradient-space);
+    min-height: 100vh;
+  }
+  
+  /* Custom mono font class */
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* Among Us Themed Components */
+  .sus-card {
+    @apply bg-card border border-border rounded-xl p-6 shadow-lg;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(10px);
+  }
+  
+  .sus-glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+  
+  .sus-glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+  
+  .sus-glow-danger {
+    box-shadow: var(--glow-danger);
+  }
+  
+  /* Animated background stars */
+  .stars-bg {
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, hsl(194 100% 70%), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(120 100% 60%), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(194 100% 80%), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(120 100% 70%), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(194 100% 60%), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: twinkle 3s ease-in-out infinite alternate;
+  }
+  
+  /* Tab styles */
+  .sus-tab {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply border border-border bg-card/50 text-muted-foreground;
+  }
+  
+  .sus-tab.active {
+    @apply bg-primary text-primary-foreground border-primary;
+    box-shadow: var(--glow-primary);
+  }
+  
+  .sus-tab.completed {
+    @apply bg-accent text-accent-foreground border-accent;
+    box-shadow: var(--glow-accent);
+  }
+  
+  .sus-tab:disabled {
+    @apply opacity-40 cursor-not-allowed;
+  }
+  
+  /* Input field with glow */
+  .sus-input {
+    @apply bg-input border border-border rounded-lg px-4 py-3 text-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary;
+    @apply transition-all duration-300;
+  }
+  
+  .sus-input:focus {
+    box-shadow: var(--glow-primary);
+  }
+  
+  /* Victory animation */
+  .victory-pulse {
+    animation: victoryPulse 1s ease-in-out infinite alternate;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.8; }
+}
+
+@keyframes victoryPulse {
+  0% { 
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  100% { 
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: var(--glow-primary);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(194 100% 50% / 0.6);
+  }
+}
+
+@keyframes emergency {
+  0%, 100% {
+    background-color: hsl(0 85% 40%);
+    box-shadow: var(--glow-danger);
+  }
+  50% {
+    background-color: hsl(0 100% 60%);
+    box-shadow: 0 0 25px hsl(0 85% 50% / 0.8);
   }
 }

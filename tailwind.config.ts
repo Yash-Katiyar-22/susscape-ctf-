@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Among Us themed colors
+        sus: {
+          warning: "hsl(var(--sus-warning))",
+          success: "hsl(var(--sus-success))",
+          emergency: "hsl(var(--sus-emergency))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +63,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'Courier New', 'monospace'],
+      },
+      backgroundImage: {
+        'gradient-space': 'var(--gradient-space)',
+        'gradient-neon': 'var(--gradient-neon)',
+        'gradient-emergency': 'var(--gradient-emergency)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +95,57 @@ export default {
             height: "0",
           },
         },
+        twinkle: {
+          "0%": { opacity: "0.3" },
+          "100%": { opacity: "0.8" },
+        },
+        victoryPulse: {
+          "0%": { 
+            transform: "scale(1)",
+            filter: "brightness(1)",
+          },
+          "100%": { 
+            transform: "scale(1.05)",
+            filter: "brightness(1.2)",
+          },
+        },
+        slideInUp: {
+          from: {
+            opacity: "0",
+            transform: "translateY(30px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        glowPulse: {
+          "0%, 100%": {
+            boxShadow: "var(--glow-primary)",
+          },
+          "50%": {
+            boxShadow: "0 0 30px hsl(194 100% 50% / 0.6)",
+          },
+        },
+        emergency: {
+          "0%, 100%": {
+            backgroundColor: "hsl(0 85% 40%)",
+            boxShadow: "var(--glow-danger)",
+          },
+          "50%": {
+            backgroundColor: "hsl(0 100% 60%)",
+            boxShadow: "0 0 25px hsl(0 85% 50% / 0.8)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        twinkle: "twinkle 3s ease-in-out infinite alternate",
+        "victory-pulse": "victoryPulse 1s ease-in-out infinite alternate",
+        "slide-in-up": "slideInUp 0.5s ease-out",
+        "glow-pulse": "glowPulse 2s ease-in-out infinite",
+        emergency: "emergency 0.8s ease-in-out infinite",
       },
     },
   },
