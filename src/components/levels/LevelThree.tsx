@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowUpDown, Clock, CheckCircle } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+import yellowDetective from "@/assets/yellow-detective.png";
 
 interface LevelThreeProps {
   onComplete: (answer: string) => boolean;
@@ -35,18 +36,10 @@ export const LevelThree = ({ onComplete, isCompleted }: LevelThreeProps) => {
     const success = onComplete(answer);
     
     if (success) {
-      toast({
-        title: "Level 3 Complete!",
-        description: "Timeline reconstructed. Level 4 unlocked.",
-        className: "bg-accent text-accent-foreground",
-      });
+      toast.success("Timeline reconstructed! Moving to next level...");
       setAnswer("");
     } else {
-      toast({
-        title: "Sort Failed",
-        description: "Timeline analysis incorrect. Review the algorithm.",
-        variant: "destructive",
-      });
+      toast.error("Incorrect algorithm. Review the sorting pattern.");
     }
     
     setIsSubmitting(false);
@@ -54,19 +47,25 @@ export const LevelThree = ({ onComplete, isCompleted }: LevelThreeProps) => {
 
   return (
     <div className="space-y-6">
-      {/* Level header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <ArrowUpDown className="w-8 h-8 text-primary" />
-          <div>
-            <h2 className="text-2xl font-bold text-primary">Level 3: Sorting</h2>
-            <p className="text-muted-foreground">Timeline Reconstruction</p>
-          </div>
+      <div className="flex items-center gap-4 mb-6">
+        <img src={yellowDetective} alt="Timeline Analysis" className="w-12 h-12" />
+        <div>
+          <h2 className="text-2xl font-bold text-primary">LEVEL 3: TIMELINE RECONSTRUCTION</h2>
+          <p className="text-muted-foreground">Temporal data analysis required</p>
         </div>
         {isCompleted && (
-          <CheckCircle className="w-8 h-8 text-accent animate-glow-pulse" />
+          <CheckCircle className="w-8 h-8 text-accent animate-glow-pulse ml-auto" />
         )}
       </div>
+
+      {isCompleted && (
+        <div className="bg-accent/20 border-l-4 border-accent p-4 rounded-lg mb-6">
+          <div className="flex items-center gap-2">
+            <span className="text-accent font-bold">✓ SOLVED</span>
+            <span className="text-muted-foreground">Timeline successfully reconstructed</span>
+          </div>
+        </div>
+      )}
 
       {/* Investigation briefing */}
       <div className="bg-muted rounded-lg p-4 font-mono text-sm">
@@ -175,40 +174,34 @@ export const LevelThree = ({ onComplete, isCompleted }: LevelThreeProps) => {
         </div>
       )}
 
-      {/* Answer input */}
       {!isCompleted && (
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Identify the sorting algorithm:
-            </label>
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-primary">Sorting Algorithm:</label>
             <Input
               type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="Enter the algorithm name..."
-              className="sus-input font-mono"
-              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+              className="sus-input"
             />
           </div>
           
-          <Button
-            onClick={handleSubmit}
-            disabled={!answer.trim() || isSubmitting}
-            className={`w-full font-bold ${
-              isSubmitting 
-                ? 'bg-sus-warning text-black animate-pulse' 
-                : 'bg-primary hover:bg-primary/90 text-primary-foreground sus-glow-primary'
-            }`}
+          <Button 
+            type="submit" 
+            disabled={isSubmitting || !answer.trim()}
+            className="sus-button w-full"
           >
-            {isSubmitting ? 'RECONSTRUCTING...' : 'SUBMIT TIMELINE'}
+            {isSubmitting ? "RECONSTRUCTING..." : "SUBMIT TIMELINE"}
           </Button>
-        </div>
+        </form>
       )}
 
-      {/* Progress indicator */}
-      <div className="text-center font-mono text-xs text-muted-foreground">
-        LEVEL 3/4 • {isCompleted ? 'COMPLETE' : 'IN PROGRESS'}
+      <div className="text-center">
+        <div className="sus-progress-indicator">
+          <span className="text-sus-accent">LEVEL 3</span>
+          <span className="text-muted-foreground">/ 7</span>
+        </div>
       </div>
     </div>
   );

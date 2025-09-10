@@ -5,8 +5,14 @@ import { LevelOne } from "./levels/LevelOne";
 import { LevelTwo } from "./levels/LevelTwo";
 import { LevelThree } from "./levels/LevelThree";
 import { LevelFour } from "./levels/LevelFour";
+import { LevelFive } from "./levels/LevelFive";
+import { LevelSix } from "./levels/LevelSix";
+import { LevelSeven } from "./levels/LevelSeven";
 import { VictoryScreen } from "./VictoryScreen";
 import { CheckCircle, Lock, AlertTriangle } from "lucide-react";
+import redCrewmate from "@/assets/red-crewmate.png";
+import blueCrewmate from "@/assets/blue-crewmate.png";
+import yellowDetective from "@/assets/yellow-detective.png";
 
 interface LevelStatus {
   completed: boolean;
@@ -21,6 +27,9 @@ export const CTFInterface = () => {
     2: { completed: false, unlocked: false },
     3: { completed: false, unlocked: false },
     4: { completed: false, unlocked: false },
+    5: { completed: false, unlocked: false },
+    6: { completed: false, unlocked: false },
+    7: { completed: false, unlocked: false },
   });
   const [showVictory, setShowVictory] = useState(false);
 
@@ -28,7 +37,10 @@ export const CTFInterface = () => {
     1: "LINKED LIST",
     2: "HASH TABLE", 
     3: "MERGE SORT",
-    4: "ARJUN"
+    4: "ARJUN",
+    5: "BINARY SEARCH TREE",
+    6: "DIJKSTRA",
+    7: "DYNAMIC PROGRAMMING"
   };
 
   const handleLevelComplete = (level: number, answer: string) => {
@@ -37,14 +49,14 @@ export const CTFInterface = () => {
       newLevels[level] = { completed: true, unlocked: true, answer };
       
       // Unlock next level
-      if (level < 4) {
+      if (level < 7) {
         newLevels[level + 1] = { completed: false, unlocked: true };
       }
       
       setLevels(newLevels);
       
       // Check if all levels completed
-      if (level === 4) {
+      if (level === 7) {
         setTimeout(() => setShowVictory(true), 1000);
       }
       
@@ -71,14 +83,21 @@ export const CTFInterface = () => {
       
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">SUSSCAPE INVESTIGATION</h1>
+        <div className="text-center mb-8 relative">
+          <div className="flex justify-center items-center gap-4 mb-4">
+            <img src={yellowDetective} alt="Detective" className="w-16 h-16" />
+            <h1 className="text-4xl font-bold text-primary">SUSSCAPE INVESTIGATION</h1>
+            <img src={blueCrewmate} alt="Crewmate" className="w-16 h-16" />
+          </div>
           <p className="text-muted-foreground font-mono">EVIDENCE PROCESSING IN PROGRESS...</p>
+          <div className="absolute -top-4 -right-4">
+            <img src={redCrewmate} alt="Suspicious" className="w-12 h-12 opacity-60" />
+          </div>
         </div>
 
         {/* Level Tabs */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {[1, 2, 3, 4].map((level) => {
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {[1, 2, 3, 4, 5, 6, 7].map((level) => {
             const status = levels[level];
             const isActive = currentLevel === level;
             
@@ -100,6 +119,9 @@ export const CTFInterface = () => {
                   {level === 2 && "Hashing"}
                   {level === 3 && "Sorting"}
                   {level === 4 && "Graph"}
+                  {level === 5 && "BST"}
+                  {level === 6 && "Pathfinding"}
+                  {level === 7 && "DP"}
                 </span>
               </button>
             );
@@ -111,7 +133,7 @@ export const CTFInterface = () => {
           <div 
             className="bg-gradient-neon h-2 rounded-full transition-all duration-500"
             style={{ 
-              width: `${(Object.values(levels).filter(l => l.completed).length / 4) * 100}%` 
+              width: `${(Object.values(levels).filter(l => l.completed).length / 7) * 100}%` 
             }}
           ></div>
         </div>
@@ -140,6 +162,24 @@ export const CTFInterface = () => {
             <LevelFour 
               onComplete={(answer) => handleLevelComplete(4, answer)}
               isCompleted={levels[4].completed}
+            />
+          )}
+          {currentLevel === 5 && (
+            <LevelFive 
+              onComplete={(answer) => handleLevelComplete(5, answer)}
+              isCompleted={levels[5].completed}
+            />
+          )}
+          {currentLevel === 6 && (
+            <LevelSix 
+              onComplete={(answer) => handleLevelComplete(6, answer)}
+              isCompleted={levels[6].completed}
+            />
+          )}
+          {currentLevel === 7 && (
+            <LevelSeven 
+              onComplete={(answer) => handleLevelComplete(7, answer)}
+              isCompleted={levels[7].completed}
             />
           )}
         </div>
